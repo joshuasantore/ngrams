@@ -1,9 +1,10 @@
 from typing import List, Tuple, Dict
 from ngrams.utils.count import get_counts
 import math
+import concurrent.futures
 
 def gen_ngrams(vocab: list, n:int, ngram:List[str] = []) -> List[Tuple[str]]:
-	res = []
+	result = []
 
 	# return our ngram if it is the right length
 	if len(ngram) == n:
@@ -11,20 +12,16 @@ def gen_ngrams(vocab: list, n:int, ngram:List[str] = []) -> List[Tuple[str]]:
 	
 	# else loop through tokens again
 	else:
-		for token in vocab:
-			# recursively call function with one more word in our ngram
-			subres = gen_ngrams(vocab, n, ngram + [token])
-
-			# if what we get is a tuple we can append it to our res
-			if type(subres) == tuple:
-				res.append(subres)
-
-			# if not we need to make sure we don't append a list to our result and instead append the contents aka the ngrams inside
-			else:
-				for gram in subres:
-					res.append(gram)
-				
-	return res
+		with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+			futures = [executor.submit(gen_ngrams, vocab, n, ngram + [token]) for token in vocab]
+			subres = [future.result() for future in concurrent.futures.as_completed(futures)]
+			for res in subres:
+				if type(res) == tuple:
+					result.append(res)
+				else:
+					for gram in res:
+						result.append(gram)
+	return result
 
 def gen_ngram_probs(ngrams: List[Tuple[str]], counts: Dict):
 	nonzero_grams = dict()

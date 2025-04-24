@@ -8,6 +8,7 @@ def get_counts(ngrams: List[Tuple[str]], history_grams: List[Tuple[str]], tokens
 		counts[ngram] = get_count(ngram, tokens)
 	return counts
 
+
 def get_count(ngram: Tuple[str], tokens: List[str]):
 	# in 0 case, which will always be the history for a unigram, count is just the total number of tokens
 	if len(ngram) == 0:
