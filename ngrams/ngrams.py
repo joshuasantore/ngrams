@@ -1,5 +1,5 @@
 from typing import List, Tuple, Dict
-from ngrams.utils.count import get_count
+from ngrams.utils.count import get_counts
 import math
 
 def gen_ngrams(vocab: list, n:int, ngram:List[str] = []) -> List[Tuple[str]]:
@@ -26,19 +26,17 @@ def gen_ngrams(vocab: list, n:int, ngram:List[str] = []) -> List[Tuple[str]]:
 				
 	return res
 
-def gen_ngram_probs(ngrams: List[Tuple[str]], tokens: List[str]):
+def gen_ngram_probs(ngrams: List[Tuple[str]], counts: Dict):
 	nonzero_grams = dict()
-
 	for ngram in ngrams:
-
-		ngram_count = get_count(ngram, tokens)
-		history_count = get_count(ngram[:-1], tokens)
+		ngram_count = counts[ngram]
+		history_count = counts[ngram[:-1]]
 
 		# make sure we arent saving zeros or dividing by zero
 		# using Maximum Likelihood Estimation
 		# saving as logarithms to avoid underflow
 		if history_count != 0 and ngram_count != 0:
-			nonzero_grams.update({ngram: (math.log(ngram_count/history_count))})
+			nonzero_grams.update({ngram: ((ngram_count/history_count))})
 	
 	# sorting for ease later
 	sorted_grams = sorted(nonzero_grams.items(), key=lambda item: item[1], reverse = True)
