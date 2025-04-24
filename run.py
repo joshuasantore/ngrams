@@ -1,8 +1,8 @@
 from ngrams.tokenizer import tokenizer
-from ngrams.probabilities import gen_ngram_probs
+from ngrams.ngrams import gen_ngrams
 
 def run_app():
-	corpus = '''Text normalization is an essential step in natural language processing that prepares raw text for analysis by converting it into a uniform format. This process helps reduce complexity and improve consistency across different texts. The main goal is to handle variations in how words appear while preserving their core meaning. One common normalization technique involves converting all text to lowercase. This prevents the same word from being treated differently just because of capital letters. For example, "Book" and "book" would become identical after lowercasing. While this simplifies processing, it can sometimes remove meaningful distinctions, such as proper nouns versus common nouns. Punctuation handling is another important aspect. Depending on the application, punctuation marks might be removed entirely, kept as separate tokens, or expanded into words. Contractions like "can't" might be converted to "cannot" for consistency. Similarly, special characters and symbols often get filtered out or replaced with standardized forms. Breaking text into individual words, known as tokenization, presents its own challenges. Some words contain internal punctuation like hyphens or apostrophes that need careful handling. Languages without clear word boundaries, such as Chinese, require specialized tokenization approaches. The choice of tokenization method can significantly impact later processing steps. Many systems remove very common words, often called stop words, which appear frequently but carry little meaning. Words like "the" or "and" might be filtered out to focus on more meaningful terms. However, this isn't always beneficial—some applications, like question answering, may need these words to understand sentence structure. Reducing words to their base forms helps group related terms together. Stemming does this by cutting off word endings, while lemmatization uses vocabulary knowledge to find dictionary forms. For example, both "running" and "ran" might be reduced to "run." These techniques help recognize that different forms of a word share the same core meaning.'''
+	corpus = '''Philosophy is the pursuit of understanding the fundamental nature of existence, knowledge, and value. It seeks to unravel the deepest questions about reality, consciousness, and meaning through reasoned inquiry rather than empirical observation alone. Unlike other disciplines that focus on specific aspects of the world, philosophy examines the underlying principles that shape thought, ethics, and perception. It challenges assumptions, explores the limits of human understanding, and engages with abstract concepts such as truth, justice, and beauty. Philosophers employ logic, critical analysis, and reflection to navigate complex ideas, often arriving at conclusions that provoke further questioning rather than definitive answers. The discipline branches into metaphysics, which considers the nature of being; epistemology, which studies knowledge; ethics, which examines moral principles; and aesthetics, which explores art and beauty. Through dialogue and debate, philosophy fosters intellectual humility, encouraging individuals to recognize the limits of their own perspectives while striving for greater clarity. It is both an ancient tradition and a living practice, continuously evolving as new ideas emerge and old ones are reinterpreted. Philosophy does not provide easy solutions but instead cultivates a deeper appreciation for the complexities of life. By examining the foundations of human thought, it invites us to reflect on how we perceive the world, relate to others, and make meaningful choices. In this way, philosophy remains essential, not as a set of doctrines, but as a method of inquiry that enriches our capacity to think critically and live thoughtfully. Its value lies not in final answers but in the ongoing pursuit of wisdom. Philosophy also serves as a bridge between disciplines, connecting the insights of science, art, religion, and politics into a broader framework of understanding. It asks how we ought to live, not just as individuals but as a society, and questions the structures that govern our lives. By examining concepts like freedom, power, and identity, philosophy reveals the tensions between personal desires and collective responsibilities. It encourages skepticism toward dogma while fostering open-mindedness, allowing ideas to be tested and refined over time. Through its emphasis on dialogue, philosophy nurtures empathy, as engaging with diverse perspectives deepens our comprehension of human experience. Ultimately, it is a tool for self-examination, pushing us to confront our biases and assumptions in the search for truth. Without prescribing rigid conclusions, philosophy offers a space for contemplation, where uncertainty is not a weakness but an invitation to deeper inquiry. Its enduring relevance lies in its ability to adapt, addressing timeless questions while responding to the ever-changing world around us.'''
 	n = 3
 
 	# tokenization
@@ -22,12 +22,14 @@ def run_app():
 	print(f"Vocab: |V| = {len(vocab)}")
 	print(vocab)
 
-	# generate ngram probabilities
-	probabilities = gen_ngram_probs(vocab=vocab, tokens=tokens, n = n)
+	# generate ngrams
+	ngrams = gen_ngrams(vocab=vocab, n = n, ngram = [])
 
 	print("\n")
-	print(f"{n}-Gram Probabilities")
-	print(probabilities)
+	print(f"{n}-Grams")
+	for ngram in ngrams:
+		print(ngram)
+	
 	
 if __name__ == "__main__":
     run_app()
