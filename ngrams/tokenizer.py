@@ -4,7 +4,7 @@ def tokenizer(corpus: str, n) -> List[str]:
 	
 	# Normalization
 	corpus = corpus.lower()
-	corpus = re.sub(r"[\(\)\"'`~&><:;,\{\}\[\]\|\\_-]", "", corpus) # get rid of non sentence terminating punctuation
+	corpus = re.sub(r"[\(\)\"’'`~&><:;,\{\}\[\]\|\\_—]", "", corpus) # get rid of non sentence terminating punctuation
 	corpus = corpus.strip()
 	# 
 
