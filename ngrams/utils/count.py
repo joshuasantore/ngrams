@@ -6,16 +6,14 @@ def get_counts(ngrams: List[Tuple[str]], history_grams: List[Tuple[str]], tokens
 		counts[ngram] = get_count(ngram, tokens)
 	for ngram in history_grams:
 		counts[ngram] = get_count(ngram, tokens)
+	# 0 length ngram history is number of tokens
+	counts[()] = len(tokens)
 	return counts
 
 
 def get_count(ngram: Tuple[str], tokens: List[str]) -> int:
-	# in 0 case, which will always be the history for a unigram, count is just the total number of tokens
-	if len(ngram) == 0:
-		return len(ngram)
-	
 	# in 1 case, need to make sure we don't count words when they appear as subsets
-	elif len(ngram) == 1:
+	if len(ngram) == 1:
 		return tokens.count(ngram[0])
 
 	else: 

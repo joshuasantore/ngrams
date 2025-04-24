@@ -3,7 +3,7 @@ from ngrams.ngrams import gen_ngrams, gen_ngram_probs
 from ngrams.utils.count import get_counts
 def run_app():
 	corpus = '''Morality is our understanding of right and wrong that leads us to act with kindness, honesty and fairness. While different cultures have varying moral codes, most share basic values like respecting life and seeking justice. These common principles help societies function peacefully. Some believe morality comes from religion while others see it as a product of human reason and empathy. Difficult choices between competing values show how complex morality can be. However, fundamental ideals like compassion and responsibility create shared ethical ground. True morality involves more than following rules - it requires thoughtful decisions that promote human dignity and wellbeing for all.'''
-	n = 2
+	n = 1
 
 	# tokenization
 	tokens = tokenizer(corpus=corpus, n=n)
