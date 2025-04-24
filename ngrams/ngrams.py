@@ -23,7 +23,7 @@ def gen_ngrams(vocab: list, n:int, ngram:List[str] = []) -> List[Tuple[str]]:
 						result.append(gram)
 	return result
 
-def gen_ngram_probs(ngrams: List[Tuple[str]], counts: Dict):
+def gen_ngram_probs(ngrams: List[Tuple[str]], counts: Dict) -> Dict[Tuple[str], float]:
 	nonzero_grams = dict()
 	for ngram in ngrams:
 		ngram_count = counts[ngram]
@@ -33,8 +33,8 @@ def gen_ngram_probs(ngrams: List[Tuple[str]], counts: Dict):
 		# using Maximum Likelihood Estimation
 		# saving as logarithms to avoid underflow
 		if history_count != 0 and ngram_count != 0:
-			nonzero_grams.update({ngram: ((ngram_count/history_count))})
+			nonzero_grams.update({ngram: (math.log(ngram_count/history_count))})
 	
 	# sorting for ease later
-	sorted_grams = sorted(nonzero_grams.items(), key=lambda item: item[1], reverse = True)
+	sorted_grams = dict(sorted(nonzero_grams.items(), key=lambda item: item[1], reverse = True))
 	return sorted_grams

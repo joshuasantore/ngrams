@@ -1,6 +1,6 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
-def get_counts(ngrams: List[Tuple[str]], history_grams: List[Tuple[str]], tokens: List[str]):
+def get_counts(ngrams: List[Tuple[str]], history_grams: List[Tuple[str]], tokens: List[str]) -> Dict[Tuple[str], float]:
 	counts = {}
 	for ngram in ngrams:
 		counts[ngram] = get_count(ngram, tokens)
@@ -9,7 +9,7 @@ def get_counts(ngrams: List[Tuple[str]], history_grams: List[Tuple[str]], tokens
 	return counts
 
 
-def get_count(ngram: Tuple[str], tokens: List[str]):
+def get_count(ngram: Tuple[str], tokens: List[str]) -> int:
 	# in 0 case, which will always be the history for a unigram, count is just the total number of tokens
 	if len(ngram) == 0:
 		return len(ngram)
